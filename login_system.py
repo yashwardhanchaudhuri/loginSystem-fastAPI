@@ -7,6 +7,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
+KEY = "59476b634c8507e6ded0b852f04e07a2672a1bef6e21de5fd1d73e49243fdb5d"
 
 class Token(BaseModel):
     access_token: str
@@ -56,3 +57,12 @@ def authenticate_user(database, username: str, password: str):
     return user
 
 
+def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None):
+    encode = data.copy
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    encode["exp"] = expire
+    encoded_jwt = jwt.encode(encode, KEY, algorithm="HS256")
+    return encoded_jwt
