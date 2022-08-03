@@ -41,10 +41,11 @@ finally:
 
 fake_users_db = {}
 for elements in records:
-    fake_users_db[elements[1]] = {
-        "username": elements[1],
+    fake_users_db[elements[2]] = {
+        "username": elements[2],
+        "name" : elements[1],
+        "email": elements[2],
         "hashed_password": elements[3],
-        "disabled": False,
     }
 print(fake_users_db)
 
@@ -154,7 +155,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 @app.get("/home/", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_active_user)):
-    if current_user.active:
-        return current_user
-    else:
-        raise HTTPException(status_code=400, detail="Inactive user")
+    return current_user
+
