@@ -1,0 +1,8 @@
+1st:
+arrange dataframes in proper order:
+    create a sorting rule
+    rearrange columns in that order
+
+apply styling to the dataframe
+convert it to html or any other suitable format
+
